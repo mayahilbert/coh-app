@@ -46,9 +46,8 @@ class App extends Component {
                   </Link>
                 </li>
                 <li class="nav-item dropdown">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
+                  <Link to="/"
+                    className="nav-link dropdown-toggle"
                     id="navbarDropdown"
                     role="button"
                     data-toggle="dropdown"
@@ -58,12 +57,12 @@ class App extends Component {
                     Settings
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">
+                    <Link to="/tally-list" className="dropdown-item">
                       User Settings
-                    </a>
-                    <a class="dropdown-item" href="#">
+                    </Link>
+                    <Link to="/tally-list" className="dropdown-item">
                       Group Settings
-                    </a>
+                    </Link>
                   </div>
                 </li>
                 <li className="navbar-item">
