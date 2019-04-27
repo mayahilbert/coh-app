@@ -49,7 +49,7 @@ onSubmit(e) {
 
     render() {
         return (
-            <div style={{marginTop: 10}}>
+            <div style={{margin: "6rem"}}>
                 <h3>Create New Tally</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -71,7 +71,7 @@ onSubmit(e) {
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Tally" className="btn btn-primary" />
+                        <input type="submit" value="Create Tally" className="btn btn-large coh-yellow white-text" />
                     </div>
                 </form>
             </div>

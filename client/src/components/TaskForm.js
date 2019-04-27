@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TaskNames from "./TaskNames";
+import axios from 'axios';
 
 export default class TaskForm extends Component {
   constructor(props) {
@@ -42,11 +44,20 @@ onSubmit(e) {
         console.log(`Task User: ${this.state.task_user}`);
         console.log(`Task Time: ${this.state.task_time}`);
 
+           const newTask = {
+               task_name: this.state.task_name,
+               task_user: this.state.task_user,
+               task_time: this.state.task_time,
+           };
+
+           axios.post('/task-list/add', newTask)
+               .then(res => console.log(res.data));
+
         this.setState({
             task_name: '',
             task_user: '',
-            task_time: '',
-        })
+            task_time: ''
+        });
     }
 
     createTaskDropdown() {
@@ -69,13 +80,18 @@ onSubmit(e) {
                   <form onSubmit={this.onSubmit}>
                       <div className="form-group">
                           <label>Task: </label>
-                          <input type="dropdown"
+                          <input type="text"
                           className="form-control"
                           onChange={this.onChangeTaskName}
-                          value={this.createTaskDropdown()}
+                          value={this.state.task_name}
+                        //  value={this.createTaskDropdown()}
                           />
 
                       </div>
+
+                      <TaskNames />
+
+
                       <div className="form-group">
                           <label>User: </label>
                           <input
@@ -103,6 +119,3 @@ onSubmit(e) {
           )
       }
   }
-
-
-export default TaskForm;

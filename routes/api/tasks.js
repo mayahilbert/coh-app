@@ -29,7 +29,7 @@ router.route('/update/:id').post(function(req, res) {
         if (!task)
             res.status(404).send("data is not found");
         else
-            task.task_description = req.body.task_description;
+            task.task_name = req.body.task_name;
             task.task_user = req.body.task_user;
             task.task_time = req.body.task_time;
 

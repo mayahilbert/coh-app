@@ -19,12 +19,9 @@ import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
-import Dashboard from "./components/dashboard/Dashboard";
 
 import TallyList from "./components/tally-list.component";
-import Tally from "./components/tally.component";
 import TaskList from "./components/task-list.component";
-import Task from "./components/task.component";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -63,8 +60,6 @@ class App extends Component {
         <PrivateRoute exact path="/task-list" component={TaskList} />
 
         <Route path="/tally-list" component={TallyList} />
-        <Route path="/task" component={Task} />
-        <Route path="/tally" component={Tally} />
         </Switch>
 
       </div>
