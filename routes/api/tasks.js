@@ -53,4 +53,12 @@ router.route('/add').post(function(req, res) {
         });
 });
 
+
+router.route('/delete/:id').get(function (req, res) {
+    Task.findByIdAndRemove({_id: req.params.id}, function(err, task){
+        if(err) res.json(err);
+        else res.json('Successfully removed');
+    });
+});
+
 module.exports = router;

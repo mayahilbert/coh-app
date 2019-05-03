@@ -24,7 +24,6 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(bodyParser.json());
 
 
 // const MongoClient = require('mongodb').MongoClient;
@@ -56,6 +55,13 @@ mongoose
   app.use("/api/users", users);
   app.use('/task-list', tasks);
   app.use('/tally-list', tallies);
+
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 
 
 // mongoose.connect('mongodb+srv://admin:cis5800@cluster0-a2fzl.mongodb.net/coh?retryWrites=true', {

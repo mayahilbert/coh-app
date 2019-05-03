@@ -27,7 +27,7 @@ return (
                 marginTop: "1rem"
               }}
               onClick={this.onLogoutClick}
-              className="btn btn-large hoverable coh-yellow"
+              className="btn btn-large hoverable coh-yellow white-text"
             >
               Logout
             </button>

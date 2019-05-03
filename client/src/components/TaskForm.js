@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import TaskNames from "./TaskNames";
 import axios from 'axios';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../actions/authActions";
 
-export default class TaskForm extends Component {
+
+class TaskForm extends Component {
+
   constructor(props) {
     super(props);
+
+    const { user } = this.props.auth;
 
     this.state = {
         task_name: '',
         task_user: '',
-        task_time: ''
+        task_time: '',
+        owner_id: user._id
     }
 
     this.onChangeTaskName = this.onChangeTaskName.bind(this);
@@ -43,11 +51,13 @@ onSubmit(e) {
         console.log(`Task Name: ${this.state.task_name}`);
         console.log(`Task User: ${this.state.task_user}`);
         console.log(`Task Time: ${this.state.task_time}`);
+        console.log(`Task Owner: ${this.state.owner_id}`);
 
            const newTask = {
                task_name: this.state.task_name,
                task_user: this.state.task_user,
                task_time: this.state.task_time,
+               owner_id: this.state.owner_id
            };
 
            axios.post('/task-list/add', newTask)
@@ -56,7 +66,8 @@ onSubmit(e) {
         this.setState({
             task_name: '',
             task_user: '',
-            task_time: ''
+            task_time: '',
+            owner_id: ''
         });
     }
 
@@ -74,10 +85,23 @@ onSubmit(e) {
   }
 
       render() {
+
+
           return (
               <div style={{marginTop: 10}}>
                   <h3>Create New Task</h3>
                   <form onSubmit={this.onSubmit}>
+
+                  <div className="form-group">
+                      <label>Cohabitant: </label>
+                      <input type="text"
+                      className="form-control"
+                      onChange={this.onChangeTaskUser}
+                      value={this.state.task_user}
+                    //  value={this.createTaskDropdown()}
+                      />
+                  </div>
+
                       <div className="form-group">
                           <label>Task: </label>
                           <input type="text"
@@ -89,22 +113,10 @@ onSubmit(e) {
 
                       </div>
 
-                      <TaskNames />
-
-
-                      <div className="form-group">
-                          <label>User: </label>
-                          <input
-                                  type="text"
-                                  className="form-control"
-                                  value={this.state.task_user}
-                                  onChange={this.onChangeTaskUser}
-                                  />
-                      </div>
                       <div className="form-group">
                           <label>Time: </label>
                           <input
-                                  type="time"
+                                  type="datetime-local"
                                   className="form-control"
                                   value={this.setDefaultDate()}
                                   onChange={this.onChangeTaskTime}
@@ -119,3 +131,17 @@ onSubmit(e) {
           )
       }
   }
+
+  TaskForm.propTypes = {
+    setCurrentUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+  };
+
+  const mapStateToProps = state => ({
+    auth: state.auth
+  });
+
+  export default connect(
+    mapStateToProps,
+    { setCurrentUser }
+  )(TaskForm);

@@ -39,11 +39,18 @@ class Navbar extends Component {
                   </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/" className="nav-link">
+                  <Link to="/stats" className="nav-link">
                     Stats
                   </Link>
                 </li>
-                <li className="navbar-item dropdown">
+                <li className="navbar-item">
+                  <Link to="/settings" className="nav-link">
+                    Settings
+                  </Link>
+                </li>
+
+                
+{/*                <li className="navbar-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="/"
@@ -56,14 +63,14 @@ class Navbar extends Component {
                     Settings
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link to="/tally-list" className="dropdown-item">
+                    <Link to="/" className="dropdown-item">
                       User Settings
                     </Link>
-                    <Link to="/tally-list" className="dropdown-item">
+                    <Link to="/" className="dropdown-item">
                       Group Settings
                     </Link>
                   </div>
-                </li>
+                </li>*/}
 
                 <li className="navbar-item">
                   <Link to="/logout" className="nav-link">

@@ -12,6 +12,9 @@ let TallySchema = new Schema({
     tally_time: {
         type: Date,
         default: Date.now
+    },
+    owner_id: {
+      type: String
     }
 });
 
