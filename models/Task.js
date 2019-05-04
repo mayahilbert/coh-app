@@ -11,7 +11,7 @@ let TaskSchema = new Schema({
     },
     task_time: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     owner_id: {
       type: String

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import TaskNames from "./TaskNames";
 import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setCurrentUser } from "../actions/authActions";
 
 
 class TaskForm extends Component {
@@ -16,8 +16,8 @@ class TaskForm extends Component {
     this.state = {
         task_name: '',
         task_user: '',
-        task_time: '',
-        owner_id: user._id
+        task_time: this.setDefaultDate(),
+        owner_id: user.id
     }
 
     this.onChangeTaskName = this.onChangeTaskName.bind(this);
@@ -81,7 +81,7 @@ onSubmit(e) {
 
   setDefaultDate(){
     var d = new Date();
-    return d;
+    return moment(d).format("YYYY-MM-DDTkk:mm");
   }
 
       render() {
@@ -132,16 +132,11 @@ onSubmit(e) {
       }
   }
 
-  TaskForm.propTypes = {
-    setCurrentUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-  };
 
   const mapStateToProps = state => ({
     auth: state.auth
   });
 
   export default connect(
-    mapStateToProps,
-    { setCurrentUser }
+    mapStateToProps
   )(TaskForm);

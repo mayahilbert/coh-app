@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -8,11 +9,12 @@ class TallyForm extends Component {
 
   constructor(props) {
     super(props);
+    const { user } = this.props.auth;
 
     this.state = {
         tally_name: '',
-        tally_time: '',
-        owner_id: ''
+        tally_time: this.setDefaultDate(),
+        owner_id: user.id
     }
 
     this.onChangeTallyName = this.onChangeTallyName.bind(this);
@@ -34,12 +36,6 @@ onChangeTallyTime(e) {
 
 onSubmit(e) {
         e.preventDefault();
-
-        const { user } = this.props.auth;
-
-        this.setState({
-            owner_id: user.name
-        });
 
         console.log(`Form submitted:`);
         console.log(`Tally Name: ${this.state.tally_name}`);
@@ -74,7 +70,7 @@ onSubmit(e) {
 
   setDefaultDate(){
     var d = new Date();
-    return d;
+    return moment(d).format("YYYY-MM-DDTkk:mm");
   }
 
       render() {
@@ -114,11 +110,6 @@ onSubmit(e) {
           )
       }
   }
-
-  TallyForm.propTypes = {
-    setCurrentUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-  };
 
   const mapStateToProps = state => ({
     auth: state.auth

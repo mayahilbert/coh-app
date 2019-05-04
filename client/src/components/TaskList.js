@@ -12,9 +12,11 @@ class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = { tasks: [] };
+
 }
 
   componentDidMount() {
+
     axios
       .get("/task-list")
       .then(response => {
@@ -32,8 +34,6 @@ class TaskList extends Component {
   }
 
   render() {
-
-    const { user } = this.props.auth;
 
     return (
       <div style={{ margin: "6rem" }}>
