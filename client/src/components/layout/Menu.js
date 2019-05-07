@@ -72,7 +72,7 @@ class Menu extends Component {
               </ul>
               <span className="navbar-text white-text">
               <p>
-                Logged into <strong>{user.name}</strong>
+                <strong>{user.name}</strong>
                 </p>
               </span>
           </nav>
