@@ -27,7 +27,7 @@ class TaskStats1 extends Component {
     const { user } = this.props.auth;
 
     axios
-      .get("/task-list/" + user.id.toString())
+      .get("/task-list/")
       .then(response => {
         console.log(response.data);
         this.setState({ tasks: response.data });

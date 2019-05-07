@@ -5,26 +5,46 @@ import { Tabs, Tab } from 'react-bootstrap';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../actions/authActions";
+import AccessBlock from './AccessBlock';
 
 
 
 class Stats extends Component {
+constructor(props){
+  super(props);
+  const { user } = this.props.auth;
 
+this.state = {
+  isAdmin : false,
+  user_name : user.name,
+  user_id : user.id
+  }
+  console.log(user);
+
+}
+componentDidMount(){
+  if(this.state.user_id === "5ccc88eb30fff820a053d278")
+  {
+      this.setState ({
+        isAdmin : true
+      });
+      console.log(this.state.isAdmin);
+
+  }
+}
 
   render() {
-    const { user } = this.props.auth;
 
 return(
 <div>
-<p>{ user.role }</p>
 <Tabs defaultActiveKey="tasks" className="bg-light tabs">
   <Tab eventKey="tasks" title="Tasks" className="tab">
-  <TaskStats1 />
+  { this.state.isAdmin ? <TaskStats1 /> : <AccessBlock /> }
   </Tab>
   <Tab eventKey="tallies" title="Tallies" className="tab">
-    <TallyStats1 />
+  { this.state.isAdmin ? <TallyStats1 /> : <AccessBlock /> }
   </Tab>
-</Tabs>;
+</Tabs>
 
 
 </div>

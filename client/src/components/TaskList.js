@@ -29,7 +29,6 @@ class TaskList extends Component {
     axios
       .get("/task-list/" + user.id.toString())
       .then(response => {
-        console.log(response.data);
         this.setState({ tasks: response.data });
       })
       .catch(function(error) {

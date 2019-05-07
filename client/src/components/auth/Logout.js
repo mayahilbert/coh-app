@@ -12,10 +12,10 @@ class Logout extends Component {
 render() {
 
 return (
-      <div style={{ height: "75vh" }} className="container center-align">
+      <div style={{ height: "75vh" }} className="container center-align margin-top">
         <div className="row">
           <div className="col s12 center-align">
-            <h4>
+            <h4 className="flow-text grey-text text-darken-1">
             Are you sure you want to log out?
             </h4>
             <button

@@ -78,6 +78,8 @@ class TallyList extends Component {
               <tr>
                 <th>Tally</th>
                 <th>Time</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>

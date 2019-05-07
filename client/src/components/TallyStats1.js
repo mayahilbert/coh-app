@@ -11,13 +11,13 @@ import moment from "moment";
 class TallyStats1 extends Component {
   constructor(props) {
     super(props);
-    this.state = { tallies: [], talliesUser: [], talliesAdmin: [], talliesCount: [] };
+    this.state = { tallies: [], talliesCount: [] };
     this.delete = this.delete.bind(this);
   }
 
-  delete() {
+  delete(tally) {
     axios
-      .get("/tally-list/delete/" + this.props.tally._id)
+      .get("/tally-list/delete/" + tally._id)
       .then(console.log("Deleted"))
       .catch(err => console.log(err));
   }
@@ -27,24 +27,11 @@ class TallyStats1 extends Component {
     axios
       .get("/tally-list/")
       .then(response => {
-        this.setState({ talliesAdmin: response.data });
+        this.setState({ tallies: response.data });
       })
       .catch(function(error) {
         console.log(error);
       })
-
-
-      axios
-        .get("/tally-list/" + user.id.toString())
-        .then(response => {
-          this.setState({ tallies: response.data });
-        })
-        .catch(function(error) {
-          console.log(error);
-        })
-
-
-
 
     axios
       .get("/tally-list/count/" + user.id.toString())
@@ -54,12 +41,7 @@ class TallyStats1 extends Component {
       .catch(function(error) {
         console.log(error);
       })
-
-
-          if(user.name === "ADMIN"){
-            console.log("This is ADMIN");
-          }
-  }
+    }
 
 
   render() {

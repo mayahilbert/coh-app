@@ -53,6 +53,10 @@ form{
   color: #61dafb;
 }
 
+.nav-tabs .nav-link.active:hover{
+color: white;  
+}
+
 .btn.coh-yellow{
   background-color: #f0bc3cff;
 }
