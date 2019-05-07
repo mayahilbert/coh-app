@@ -12,8 +12,9 @@ class ConfirmDeleteTask extends Component {
               Task successfully deleted.
             </h1>
             <br />
-            <Link to="/task-list">
-              Go back
+            <Link to="/task-list" className="btn-flat waves-effect">
+              <i className="material-icons left">keyboard_backspace</i> Back to
+              tasks
             </Link>
 
           </div>

@@ -12,9 +12,11 @@ class ConfirmDeleteTally extends Component {
               Admin access required.
             </h1>
             <br />
-            <Link to="/">
-              Go back to homepage
+            <Link to="/" className="btn-flat waves-effect">
+              <i className="material-icons left">keyboard_backspace</i> Back to
+              home
             </Link>
+      
 
           </div>
         </div>

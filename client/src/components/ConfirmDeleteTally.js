@@ -12,8 +12,9 @@ class ConfirmDeleteTally extends Component {
               Tally successfully deleted.
             </h1>
             <br />
-            <Link to="/tally-list">
-              Go back
+            <Link to="/tally-list" className="btn-flat waves-effect">
+              <i className="material-icons left">keyboard_backspace</i> Back to
+              tallies
             </Link>
 
           </div>
