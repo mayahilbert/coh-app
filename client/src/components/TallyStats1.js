@@ -8,25 +8,43 @@ import { setCurrentUser } from "../actions/authActions";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-class TallyList extends Component {
+class TallyStats1 extends Component {
   constructor(props) {
     super(props);
-    this.state = { tallies: [], talliesCount: [] };
+    this.state = { tallies: [], talliesUser: [], talliesAdmin: [], talliesCount: [] };
     this.delete = this.delete.bind(this);
   }
 
+  delete() {
+    axios
+      .get("/tally-list/delete/" + this.props.tally._id)
+      .then(console.log("Deleted"))
+      .catch(err => console.log(err));
+  }
 
   componentDidMount() {
     const { user } = this.props.auth;
-
     axios
-      .get("/tally-list/" + user.id.toString())
+      .get("/tally-list/")
       .then(response => {
-        this.setState({ tallies: response.data });
+        this.setState({ talliesAdmin: response.data });
       })
       .catch(function(error) {
         console.log(error);
-      });
+      })
+
+
+      axios
+        .get("/tally-list/" + user.id.toString())
+        .then(response => {
+          this.setState({ tallies: response.data });
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+
+
+
 
     axios
       .get("/tally-list/count/" + user.id.toString())
@@ -35,54 +53,40 @@ class TallyList extends Component {
       })
       .catch(function(error) {
         console.log(error);
-      });
+      })
+
+
+          if(user.name === "ADMIN"){
+            console.log("This is ADMIN");
+          }
   }
 
-
-    delete(tally) {
-      axios
-        .get("/tally-list/delete/" + tally._id)
-        .then(console.log("Deleted"))
-        .catch(err => console.log(err));
-    }
-
-  TalliesCount() {
-    if (this.state.talliesCount != null) {
-      return this.state.talliesCount.reverse().map(function(currentTally, i) {
-        return <TallyCount tallyCount={currentTally} key={i} />;
-      });
-    }
-  }
 
   render() {
+    const { user } = this.props.auth;
+
     return (
       <div style={{ margin: "6rem" }}>
-        <TallyForm />
-
         <div className="margin-top">
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Tally</th>
-                <th>Occurrences</th>
-              </tr>
-            </thead>
-            <tbody>{this.TalliesCount()}</tbody>
-          </table>
-        </div>
-
-        <div className="margin-top">
-          <h3>Tally Records</h3>
-          <table className="table table-striped">
-            <thead>
-              <tr>
+                <th>Owner ID</th>
+                <th>Owner</th>
+                <th>Tally ID</th>
                 <th>Tally</th>
                 <th>Time</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
+
               {this.state.tallies.reverse().map((tally, id) => (
                <tr key={tally._id}>
+                <td>{tally.owner_id}</td>
+                <td>{tally.owner_name}</td>
+                <td>{tally._id}</td>
                   <td>{tally.tally_name}</td>
                   <td>{moment(tally.tally_time).format("YYYY-MM-DD hh:mm")}</td>
                   <td>
@@ -115,7 +119,7 @@ class TallyList extends Component {
   }
 }
 
-TallyList.propTypes = {
+TallyStats1.propTypes = {
   setCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -127,4 +131,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { setCurrentUser }
-)(TallyList);
+)(TallyStats1);

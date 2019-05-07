@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 export default class EditTally extends Component {
 
@@ -17,11 +18,11 @@ export default class EditTally extends Component {
     }
 
     componentDidMount() {
-        axios.get('/tally-list'+this.props.match.params.id)
-            .then(response => {
+        axios.get('/tally-list/tally/'+this.props.match.params.id)
+            .then(res => {
                 this.setState({
-                    tally_name: response.data.tally_name,
-                    tally_time: response.data.tally_time
+                    tally_name: res.data.tally_name,
+                    tally_time: moment(res.data.tally_time).format("YYYY-MM-DDTkk:mm")
                 })
             })
             .catch(function (error) {
@@ -44,16 +45,17 @@ export default class EditTally extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const obj = {
+        const updatedTally = {
           tally_name: this.state.tally_name,
           tally_time: this.state.tally_time
         };
-        console.log(obj);
-        axios.post('tally-list/update/'+this.props.match.params.id, obj)
+        console.log(updatedTally);
+        axios.post('/tally-list/update/'+this.props.match.params.id, updatedTally)
             .then(res => console.log(res.data));
 
         this.props.history.push('/tally-list');
     }
+
 
     render() {
         return (
@@ -64,7 +66,7 @@ export default class EditTally extends Component {
                         <label>Tally: </label>
                         <input  type="text"
                                 className="form-control"
-                                value={this.state.tally_name}
+                                defaultValue={this.state.tally_name}
                                 onChange={this.onChangeTallyName}
                                 />
                     </div>
@@ -73,7 +75,7 @@ export default class EditTally extends Component {
                         <input
                                 type="datetime-local"
                                 className="form-control"
-                                value={this.state.tally_time}
+                                defaultValue={moment(this.state.tally_time).format("YYYY-MM-DDTkk:mm")}
                                 onChange={this.onChangeTallyTime}
                                 />
                     </div>

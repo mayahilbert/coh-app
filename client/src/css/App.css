@@ -19,6 +19,36 @@
   color: white;
 }
 
+label{
+  font-size: 1rem;
+
+}
+
+
+.yellow-text{
+  color:  #f0bc3cff;
+}
+.table td{
+text-align: center;
+}
+input{
+  text-align: center;
+}
+
+.table th{
+  border-top: none;
+}
+
+form{
+  padding: 2rem 10rem;
+}
+
+
+.margin-top{
+  margin-top: 70px;
+
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -45,6 +75,9 @@
   background-color: #f0bc3cff !important;
 }
 
+.nav-tabs .nav-link{
+padding: .1rem 3rem;}
+
 .nav-bar{
   padding: 0;
 }
@@ -67,8 +100,63 @@ line-height: 60px;
   opacity: .8;
   color: #fff;
 }
+.navbar-text{
+  padding-top: 24px;
+}
 
 .navbar-light .navbar-nav .nav-link{
   color: #fff;
   font-weight: bold;
+}
+
+
+.yellow-highlight{
+  background-color: #f0bc3cff !important;
+height: 3rem;
+}
+
+.tag-line{
+margin: 5% 40%;
+padding-bottom: 60px;
+}
+.btn:hover, .btn-large:hover, btn-small:hover{
+background-color: #f0bc3cff  !important;
+}
+.nav-tabs .nav-link:hover{
+  border: none;
+  background-color: lightgrey;
+}
+.nav-tabs a:hover{
+  color: white;
+}
+
+a{
+  color: #f0bc3cff;
+}
+
+a:hover{
+  font-weight: bold;
+  color: #f0bc3cff;
+  text-decoration: none;
+}
+
+input:focus {  border-bottom: 1px solid #f0bc3cff !important;
+  -webkit-box-shadow: 0 1px 0 0 #f0bc3cff !important;
+  box-shadow: 0 1px 0 0 #f0bc3cff !important;
+}
+
+@media only screen and (max-width: 700px) {
+.nav-link{ padding: none;}
+.tag-line{
+margin: 5% 20%;
+padding-bottom: 60px;
+}
+nav{
+  line-height: 18px;
+  height: 300px;
+}
+.navbar{
+  display: block;
+}
+
 }

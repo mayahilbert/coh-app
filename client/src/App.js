@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
-import Navbar from "./components/layout/Navbar";
+import Menu from "./components/layout/Menu";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -25,6 +25,10 @@ import TaskList from "./components/TaskList";
 import EditTask from "./components/EditTask";
 import EditTally from "./components/EditTally";
 import Stats from "./components/Stats";
+import ConfirmDeleteTask from "./components/ConfirmDeleteTask";
+import ConfirmDeleteTally from "./components/ConfirmDeleteTally";
+
+
 
 
 // Check for token to keep user logged in
@@ -54,18 +58,23 @@ class App extends Component {
       <Provider store={store}>
       <Router>
       <div className="App">
-        <Navbar />
+        <Menu />
         <Route exact path="/" component={Landing} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
 
+
         <Switch>
         <PrivateRoute exact path="/logout" component={Logout} />
         <PrivateRoute exact path="/task-list" component={TaskList} />
-        <PrivateRoute path="/tally-list" component={TallyList} />
-        <PrivateRoute path="/edit" component={EditTask} />
-        <PrivateRoute path="/edit" component={EditTally} />
-        <PrivateRoute path="/stats" component={Stats} />
+        <PrivateRoute exact path="/tally-list" component={TallyList} />
+        <PrivateRoute path="/task-list/edit/:id" component={EditTask} />
+        <PrivateRoute path="/tally-list/edit/:id" component={EditTally} />
+        <PrivateRoute exact path="/admin/stats" component={Stats} />
+        <PrivateRoute path="/confirm-delete-tally" component={ConfirmDeleteTally} />
+        <PrivateRoute path="/confirm-delete-task" component={ConfirmDeleteTask} />
+
+
 
         </Switch>
 

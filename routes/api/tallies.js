@@ -6,6 +6,29 @@ const keys = require("../../config/keys");
 
 // Load Tally model
 const Tally = require("../../models/Tally");
+var mongodb   = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
+
+router.route('/count/:owner').get(function(req, res) {
+  var owner = req.params.owner;
+var query = {};
+query['owner_id'] = owner;
+
+  Tally.aggregate(
+      [
+        { "$match" : query },
+        { "$group": {
+            "_id": "$tally_name",
+            "count": { "$sum": 1 }
+        }}      ],
+        function(err, tallies) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(tallies);
+            }
+  });
+});
 
  router.route('/').get(function(req, res) {
     Tally.find(function(err, tallies) {
@@ -17,20 +40,42 @@ const Tally = require("../../models/Tally");
     });
 });
 
-router.route('/:id').get(function(req, res) {
-    let id = req.params.id;
-    Tally.findById(id, function(err, tally) {
-        res.json(tally);
-    });
+router.route('/:owner').get(function(req, res) {
+
+  var owner = req.params.owner;
+var query = {};
+query['owner_id'] = owner;
+
+   Tally.find(query, function(err, tallies) {
+       if (err) {
+           console.log(err);
+       } else {
+         console.log(tallies);
+           res.json(tallies);
+       }
+   });
 });
 
+router.route('/tally/:id').get(function(req, res) {
+  console.log("Req params id in router: " + req.params.id);
+  _id = new ObjectId(req.params.id);
+      Tally.findById(_id, function(err, tallies){
+        console.log(tallies);
+        if (err) {
+            console.log(err);
+        } else {
+          console.log(tallies);
+          res.json(tallies);
+        }
+      });
+  });
+
 router.route('/update/:id').post(function(req, res) {
-    Tally.findById(req.params.id, function(err, tally) {
+    Tally.findOne({ "_id": req.params.id}, function(err, tally) {
         if (!tally)
             res.status(404).send("data is not found");
         else
             tally.tally_name = req.body.tally_name;
-            tally.tally_user = req.body.tally_user;
             tally.tally_time = req.body.tally_time;
 
             tally.save().then(tally => {

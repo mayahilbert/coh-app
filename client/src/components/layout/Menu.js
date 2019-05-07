@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../actions/authActions";
+
 
 
 import logo from "./logo.svg";
 
-class Navbar extends Component {
+class Menu extends Component {
 
 
   render() {
+
+    const { user } = this.props.auth;
+
 
     return (
         <div className="container">
@@ -15,18 +22,6 @@ class Navbar extends Component {
           <Link to="/" className="navbar-brand">
           <img src={logo} height="60" alt="COH" />
           </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
                   <Link to="/task-list" className="nav-link">
@@ -39,17 +34,12 @@ class Navbar extends Component {
                   </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/stats" className="nav-link">
+                  <Link to="/admin/stats" className="nav-link">
                     Stats
                   </Link>
                 </li>
-                <li className="navbar-item">
-                  <Link to="/settings" className="nav-link">
-                    Settings
-                  </Link>
-                </li>
 
-                
+
 {/*                <li className="navbar-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -72,13 +62,19 @@ class Navbar extends Component {
                   </div>
                 </li>*/}
 
+<span>
                 <li className="navbar-item">
                   <Link to="/logout" className="nav-link">
                     Logout
                   </Link>
                 </li>
+                </span>
               </ul>
-            </div>
+              <span className="navbar-text white-text">
+              <p>
+                Logged into <strong>{user.name}</strong>
+                </p>
+              </span>
           </nav>
           <br />
           </div>
@@ -86,5 +82,16 @@ class Navbar extends Component {
   }
 }
 
+Menu.propTypes = {
+  setCurrentUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
 
-export default Navbar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { setCurrentUser }
+)(Menu);

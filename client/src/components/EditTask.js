@@ -1,35 +1,46 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from "react-redux";
+import moment from "moment";
 
-export default class EditTask extends Component {
+class EditTask extends Component {
 
     constructor(props) {
         super(props);
-
-        this.onChangeTaskName = this.onChangeTaskName.bind(this);
-        this.onChangeTaskUser = this.onChangeTaskUser.bind(this);
-        this.onChangeTaskTime = this.onChangeTaskTime.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             task_name: '',
             task_user: '',
             task_time: ''
         }
+
+        this.onChangeTaskName = this.onChangeTaskName.bind(this);
+        this.onChangeTaskUser = this.onChangeTaskUser.bind(this);
+        this.onChangeTaskTime = this.onChangeTaskTime.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+
     }
 
     componentDidMount() {
-        axios.get('/task-list'+this.props.match.params.id)
-            .then(response => {
+
+
+        axios
+        .get("/task-list/task/"+ this.props.match.params.id)
+            .then(res => {
+              console.log("id in edittask: "  + this.props.match.params.id);
+
                 this.setState({
-                    task_name: response.data.task_name,
-                    task_user: response.data.task_user,
-                    task_time: response.data.task_time
+
+                    task_name: res.data.task_name,
+                    task_user: res.data.task_user,
+                    task_time: moment(res.data.task_time).format("YYYY-MM-DDTkk:mm")
                 })
+
+
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
     }
 
     onChangeTaskName(e) {
@@ -53,13 +64,13 @@ export default class EditTask extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const obj = {
+        const updatedTask = {
           task_name: this.state.task_name,
           task_user: this.state.task_user,
           task_time: this.state.task_time
         };
-        console.log(obj);
-        axios.post('task-list/update/'+this.props.match.params.id, obj)
+        console.log(updatedTask);
+        axios.post('/task-list/update/'+this.props.match.params.id, updatedTask)
             .then(res => console.log(res.data));
 
         this.props.history.push('/task-list');
@@ -74,7 +85,7 @@ export default class EditTask extends Component {
                     <label>Cohabitant: </label>
                     <input  type="text"
                             className="form-control"
-                            value={this.state.task_user}
+                            defaultValue={this.state.task_user}
                             onChange={this.onChangeTaskUser}
                             />
                 </div>
@@ -82,7 +93,7 @@ export default class EditTask extends Component {
                         <label>Task: </label>
                         <input  type="text"
                                 className="form-control"
-                                value={this.state.task_name}
+                                defaultValue={this.state.task_name}
                                 onChange={this.onChangeTaskName}
                                 />
                     </div>
@@ -91,7 +102,7 @@ export default class EditTask extends Component {
                         <input
                                 type="datetime-local"
                                 className="form-control"
-                                value={this.state.task_time}
+                                defaultValue={this.state.task_time}
                                 onChange={this.onChangeTaskTime}
                                 />
                     </div>
@@ -108,3 +119,11 @@ export default class EditTask extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps
+)(EditTask);

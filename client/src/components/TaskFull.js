@@ -23,22 +23,22 @@ class Task extends Component {
 
 
   render() {
-
-
     return (
       <tr>
+
+      <td>{this.props.task.owner_id}</td>
+      <td>{this.props.task.owner_name}</td>
+      <td>{this.props.task._id}</td>
         <td>{this.props.task.task_name}</td>
         <td>{this.props.task.task_user}</td>
         <td>{this.props.task.task_time}</td>
+
         <td>
           <Link to={"/task-list/edit/" + this.props.task._id} className="btn btn-large">Edit</Link>
         </td>
         <td>
-        <Link to="/confirm-delete-task">
-
-                    <button onClick={() => {this.delete ();
+                    <button onClick={() => {this.delete (() => this.history.push("/task-list"));
           }} className="btn btn-large coh-yellow white-text btn-delete">Delete</button>
-          </Link>
         </td>
       </tr>
     );

@@ -10,7 +10,6 @@ class Logout extends Component {
   };
 
 render() {
-    const { user } = this.props.auth;
 
 return (
       <div style={{ height: "75vh" }} className="container center-align">

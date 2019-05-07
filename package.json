@@ -6,17 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "npm install --prefix client",
-    "server": "nodemon server.js",
+    "server": "nodemon server.js --ignore client",
     "client": "npm start --prefix client",
     "dev": "./node_modules/.bin/concurrently \"npm run server\" \"npm run client\""
   },
   "proxy": {
     "/auth/google": {
-      "target": "https://localhost:5000",
+      "target": "http://127.0.0.1:5000",
       "secure": false
     },
     "/api/*": {
-      "target": "https://localhost:5000",
+      "target": "http://127.0.0.1:5000",
       "secure": false
     }
   },
@@ -39,8 +39,9 @@
     "npm": "^6.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "react-bootstrap": "^1.0.0-beta.8",
+    "permission": "^1.1.0",
     "react-chartjs-2": "^2.7.6",
+    "react-modal": "^3.8.1",
     "validator": "^10.11.0"
   }
 }

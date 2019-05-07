@@ -6,6 +6,8 @@ const keys = require("../../config/keys");
 
 // Load Task model
 const Task = require("../../models/Task");
+var mongodb   = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
 
  router.route('/').get(function(req, res) {
     Task.find(function(err, tasks) {
@@ -17,16 +19,39 @@ const Task = require("../../models/Task");
     });
 });
 
+router.route('/:owner').get(function(req, res) {
 
-router.route('/:id').get(function(req, res) {
-    let id = req.params.id;
-    Task.findById(id, function(err, task) {
-        res.json(task);
+  var owner = req.params.owner;
+var query = {};
+query['owner_id'] = owner;
+
+   Task.find(query, function(err, tasks) {
+       if (err) {
+           console.log(err);
+       } else {
+         console.log(tasks);
+           res.json(tasks);
+       }
+   });
+});
+
+
+router.route('/task/:id').get(function(req, res) {
+console.log("Req params id in router: " + req.params.id);
+_id = new ObjectId(req.params.id);
+    Task.findById(_id, function(err, tasks){
+      console.log(tasks);
+      if (err) {
+          console.log(err);
+      } else {
+        console.log(tasks);
+        res.json(tasks);
+      }
     });
 });
 
 router.route('/update/:id').post(function(req, res) {
-    Task.findById(req.params.id, function(err, task) {
+    Task.findOne({ "_id": req.params.id}, function(err, task){
         if (!task)
             res.status(404).send("data is not found");
         else

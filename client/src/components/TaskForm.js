@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import TaskNames from "./TaskNames";
 import axios from 'axios';
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 
@@ -17,7 +15,8 @@ class TaskForm extends Component {
         task_name: '',
         task_user: '',
         task_time: this.setDefaultDate(),
-        owner_id: user.id
+        owner_id: user.id,
+        owner_name: user.name
     }
 
     this.onChangeTaskName = this.onChangeTaskName.bind(this);
@@ -52,12 +51,16 @@ onSubmit(e) {
         console.log(`Task User: ${this.state.task_user}`);
         console.log(`Task Time: ${this.state.task_time}`);
         console.log(`Task Owner: ${this.state.owner_id}`);
+        console.log(`Task Owner Name: ${this.state.owner_name}`);
+
 
            const newTask = {
                task_name: this.state.task_name,
                task_user: this.state.task_user,
                task_time: this.state.task_time,
-               owner_id: this.state.owner_id
+               owner_id: this.state.owner_id,
+               owner_name: this.state.owner_name
+
            };
 
            axios.post('/task-list/add', newTask)
@@ -66,9 +69,11 @@ onSubmit(e) {
         this.setState({
             task_name: '',
             task_user: '',
-            task_time: '',
-            owner_id: ''
+            task_time: this.setDefaultDate(),
         });
+
+        window.location.reload();
+
     }
 
     createTaskDropdown() {
@@ -102,6 +107,7 @@ onSubmit(e) {
                       />
                   </div>
 
+
                       <div className="form-group">
                           <label>Task: </label>
                           <input type="text"
@@ -118,7 +124,7 @@ onSubmit(e) {
                           <input
                                   type="datetime-local"
                                   className="form-control"
-                                  value={this.setDefaultDate()}
+                                  defaultValue={this.setDefaultDate()}
                                   onChange={this.onChangeTaskTime}
                                   />
                       </div>

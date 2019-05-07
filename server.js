@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const db = require("./config/keys").mongoURI;
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const passport = require("passport");
 
@@ -55,6 +55,7 @@ mongoose
   app.use("/api/users", users);
   app.use('/task-list', tasks);
   app.use('/tally-list', tallies);
+
 
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");

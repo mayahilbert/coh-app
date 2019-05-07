@@ -12,7 +12,7 @@ import moment from "moment";
 import { setCurrentUser } from "../actions/authActions";
 
 
-class TaskList extends Component {
+class TaskStats1 extends Component {
   constructor(props) {
     super(props);
     this.state = { tasks: []
@@ -43,38 +43,34 @@ class TaskList extends Component {
           .catch(err => console.log(err))
         }
 
-  Tasks() {
-    if(this.state.tasks != null){
-    return this.state.tasks.reverse().map(function(currentTask, i) {
-      return <Task task={currentTask} key={i}/>;
-    });
-  }
-  }
 
   render() {
 
     return (
       <div style={{ margin: "6rem" }}>
-        <TaskForm />
 
         <div className="margin-top">
           <table className="table table-striped">
             <thead>
               <tr>
+              <th>Owner ID</th>
+              <th>Owner</th>
+              <th>Task ID</th>
                 <th>Task</th>
                 <th>Cohabitant</th>
                 <th>Time</th>
-                <th>Edit</th>
-                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
             {
               this.state.tasks.reverse().map((task, id) => (
                <tr key={task._id}>
+               <td>{task.owner_id}</td>
+               <td>{task.owner_name}</td>
+               <td>{task._id}</td>
                 <td>{task.task_name}</td>
                 <td>{task.task_user}</td>
-                <td>{task.task_time}</td>
+                <td>{moment(task.task_time).format("YYYY-MM-DD hh:mm")}</td>
                 <td>
                   <Link to={"/task-list/edit/" + task._id} className="btn btn-large">Edit</Link>
                 </td>
@@ -98,7 +94,7 @@ class TaskList extends Component {
 }
 
 
-TaskList.propTypes = {
+TaskStats1.propTypes = {
   setCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -110,4 +106,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { setCurrentUser }
-)(TaskList);
+)(TaskStats1);

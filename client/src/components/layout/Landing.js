@@ -6,12 +6,20 @@ import logo from "./logo.svg";
 class Landing extends Component {
   render() {
     return (
-      <div style={{ height: "75vh" }} className="container center-align vertical-align">
+      <div style={{ height: "75vh" }} className="container center-align valign">
         <div className="row">
           <div className="col s12 center-align">
             <h1 className="flow-text grey-text text-darken-1">
-              WELCOME TO <br /> <img src={logo} height="80" alt="COH" />
+            <br /><br />
+              <img src={logo} height="200" alt="COH" />
+              <br /><br />
+              It&#8217;s easier to live with COH.
+
             </h1>
+            <div className="yellow-highlight tag-line">
+            <br />
+            <p className="white-text "> A COLIVING MANAGEMENT TOOL
+<br /></p></div>
             <br />
             <Link to="/register"
               style={{

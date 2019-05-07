@@ -4,7 +4,7 @@ import {
   Link
 } from "react-router-dom";
 
-class Tally extends Component {
+class TallyFull extends Component {
 
   constructor(props) {
         super(props);
@@ -24,20 +24,21 @@ class Tally extends Component {
   render() {
     return (
       <tr>
+      <td>{this.props.tally.owner_id}</td>
+      <td>{this.props.tally.owner_name}</td>
+      <td>{this.props.tally._id}</td>
         <td>{this.props.tally.tally_name}</td>
         <td>{this.props.tally.tally_time}</td>
         <td>
           <Link to={"/tally-list/edit/" + this.props.tally._id} className="btn btn-large">Edit</Link>
         </td>
         <td>
-        <Link to="/confirm-delete-tally">
-                    <button onClick={() => {this.delete ();
+                    <button onClick={() => {this.delete (() => this.history.push("/tally-list"));
           }} className="btn btn-large coh-yellow white-text btn-delete">Delete</button>
-          </Link>
         </td>
       </tr>
     );
   }
 }
 
-export default Tally;
+export default TallyFull;

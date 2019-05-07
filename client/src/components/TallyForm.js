@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setCurrentUser } from "../actions/authActions";
 
@@ -14,7 +13,8 @@ class TallyForm extends Component {
     this.state = {
         tally_name: '',
         tally_time: this.setDefaultDate(),
-        owner_id: user.id
+        owner_id: user.id,
+        owner_name: user.name
     }
 
     this.onChangeTallyName = this.onChangeTallyName.bind(this);
@@ -46,7 +46,8 @@ onSubmit(e) {
            const newTally = {
                tally_name: this.state.tally_name,
                tally_time: this.state.tally_time,
-               owner_id: this.state.owner_id
+               owner_id: this.state.owner_id,
+               owner_name: this.state.owner_name
 
            };
 
@@ -55,9 +56,10 @@ onSubmit(e) {
 
         this.setState({
             tally_name: '',
-            tally_time: '',
-            owner_id: ''
+            tally_time: this.setDefaultDate(),
         });
+
+        window.location.reload();
     }
 
     createTallyDropdown() {
@@ -97,13 +99,14 @@ onSubmit(e) {
                           <input
                                   type="datetime-local"
                                   className="form-control"
-                                  value={this.setDefaultDate()}
+                                  defaultValue={this.setDefaultDate()}
                                   onChange={this.onChangeTallyTime}
                                   />
                       </div>
 
                       <div className="form-group">
-                          <input type="submit" value="Create Tally" className="btn btn-large coh-yellow white-text" />
+                          <input type="submit"
+ value="Create Tally" className="btn btn-large coh-yellow white-text" />
                       </div>
                   </form>
               </div>

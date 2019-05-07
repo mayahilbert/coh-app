@@ -15,7 +15,11 @@ let TaskSchema = new Schema({
     },
     owner_id: {
       type: String
+    },
+    owner_name: {
+      type: String
     }
+
 });
 
 module.exports = Task = mongoose.model('tasks', TaskSchema);
